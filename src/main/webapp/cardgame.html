@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title id="titleID"></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <link rel="stylesheet" href="css/main.css">
+        <script type="text/javascript" src="cardgame.js"></script>
+        <script type="text/javascript" src="jquery-2.1.1"></script>
+    </head>
+    <body>
+        <div id="userID"></div>
+        <h2></h2>
+        <br>
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <table class="innertable">
+                            <tbody>
+                                <tr>
+                                    <td class="label">
+                                        <p>Game time (s):</p>
+                                    </td>
+                                    <td class="value">
+                                        <input disabled id="timeID" type="text" size="20" value=""/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label">
+                                        <p>Message</p>
+                                    </td>
+                                    <td class="value">
+                                        <input disabled id="messageID" type="text" size="40" value=""/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label">
+                                        <p>Hand:</p>
+                                        <input disabled id="scoreID" type="text" size="10" value=""/>
+                                    </td>
+                                    <td class="value">
+                                        <div style="float: left;"><IMG id="card1" SRC="cards/b1fv.png"></div>
+                                        <div style="float: left;"><IMG id="card2" SRC="cards/b1fv.png"></div>
+                                        <div style="float: left;"><IMG id="card3" SRC="cards/b1fv.png"></div>
+                                        <div style="float: left;"><IMG id="card4" SRC="cards/b1fv.png"></div>
+                                        <div style="float: left;"><IMG id="card5" SRC="cards/b1fv.png"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <form action="">
+                                                        <input type="button" id="joinID" onclick="joinGame();" value="Join">
+                                                    </form>
+                                                </td>
+                                                <td>
+                                                    <form action="">
+                                                        <input type="button" id="startID" onclick="startGame();" value="Start">
+                                                    </form>
+                                                </td>
+                                                <td>
+                                                    <form action="">
+                                                        <input type="button" id="dealID" onclick="deal();" value="Deal">
+                                                    </form>
+                                                </td>
+                                                <td>
+                                                    <form action="">
+                                                        <input type="button" id="stopID" onclick="stopGame();" value="Stop">
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <div id="loginId"></div>
+
+        <div id="resultID"></div>
+        <br>
+        <div id="output"></div>
+
+    </body>
+</html>
