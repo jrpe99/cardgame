@@ -41,11 +41,11 @@ function handleResponse(evt) {
     if (json.type === "handres") {
         //writeToScreen(evt.data);
         document.getElementById("scoreID").value = json.score;
-        document.getElementById("card1").src = "cards/" + json.card1 + ".png";
-        document.getElementById("card2").src = "cards/" + json.card2 + ".png";
-        document.getElementById("card3").src = "cards/" + json.card3 + ".png";
-        document.getElementById("card4").src = "cards/" + json.card4 + ".png";
-        document.getElementById("card5").src = "cards/" + json.card5 + ".png";
+        var cardList = [];
+        cardList = json.cardList;
+        for(var i = 1; i <= cardList.length; i++) {
+            document.getElementById("card"+i).src = "cards/" + cardList[i-1] + ".png";
+        }
     }
     if (json.type === "loginres") {
         document.getElementById("loginId").value = json.loginId;

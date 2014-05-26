@@ -9,6 +9,8 @@ import dk.java8.game.card.Card;
 import dk.java8.game.card.Dealer;
 import dk.java8.game.card.Deck;
 import dk.java8.game.card.Hand;
+import dk.java8.game.card.Rank;
+import dk.java8.game.card.Suit;
 import dk.java8.game.card.score.ScoreCalculator;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -102,17 +104,9 @@ public class CardGame {
                     hands.remove(0);
                     HandResponse handResp = new HandResponse();
                     handResp.setScore(hand.getScore().toString());
-                    List<Card> cards = hand.getCards().stream().sorted().collect(Collectors.toList());
-                    Card card = cards.get(0);
-                    handResp.setCard1(card.getSuit().toString().toLowerCase()+card.getRank().toString().toLowerCase());
-                    card = cards.get(1);
-                    handResp.setCard2(card.getSuit().toString().toLowerCase()+card.getRank().toString().toLowerCase());
-                    card = cards.get(2);
-                    handResp.setCard3(card.getSuit().toString().toLowerCase()+card.getRank().toString().toLowerCase());
-                    card = cards.get(3);
-                    handResp.setCard4(card.getSuit().toString().toLowerCase()+card.getRank().toString().toLowerCase());
-                    card = cards.get(4);
-                    handResp.setCard5(card.getSuit().toString().toLowerCase()+card.getRank().toString().toLowerCase());
+                    hand.getCards().stream().sorted().forEach(card -> {
+                        handResp.addCard(card.getSuit(), card.getRank());
+                    });
                     try {
                         s.getBasicRemote().sendText(handResp.toJson());
                     } catch (IOException ex) {

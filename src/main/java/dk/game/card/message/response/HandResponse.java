@@ -7,6 +7,11 @@
 package dk.game.card.message.response;
 
 import dk.game.card.message.GameMessage;
+import dk.java8.game.card.Card;
+import dk.java8.game.card.Rank;
+import dk.java8.game.card.Suit;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -15,11 +20,7 @@ import dk.game.card.message.GameMessage;
 public class HandResponse extends GameMessage {
 
     private String score;
-    private String card1;
-    private String card2;
-    private String card3;
-    private String card4;
-    private String card5;
+    private List<String> cardList = new ArrayList<>();
 
     public HandResponse() {
         this.setType(HAND_RESPONSE);
@@ -33,45 +34,15 @@ public class HandResponse extends GameMessage {
         this.score = score;
     }
 
-    public String getCard1() {
-        return card1;
+    public void addCard(Suit suit, Rank rank) {
+        String cardString = suit.toString().toLowerCase()+rank.toString().toLowerCase();        
+        this.cardList.add(cardString);
+    }
+    public List<String> getCardList() {
+        return cardList;
     }
 
-    public void setCard1(String card1) {
-        this.card1 = card1;
+    public void setCardList(List<String> cardList) {
+        this.cardList = cardList;
     }
-
-    public String getCard2() {
-        return card2;
-    }
-
-    public void setCard2(String card2) {
-        this.card2 = card2;
-    }
-
-    public String getCard3() {
-        return card3;
-    }
-
-    public void setCard3(String card3) {
-        this.card3 = card3;
-    }
-
-    public String getCard4() {
-        return card4;
-    }
-
-    public void setCard4(String card4) {
-        this.card4 = card4;
-    }
-
-    public String getCard5() {
-        return card5;
-    }
-
-    public void setCard5(String card5) {
-        this.card5 = card5;
-    }
-    
-    
 }
