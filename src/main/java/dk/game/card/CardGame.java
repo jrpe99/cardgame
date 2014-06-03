@@ -5,6 +5,7 @@ import dk.game.card.message.request.LoginRequestMessage;
 import dk.game.card.message.response.HandResponse;
 import dk.game.card.message.response.LoginResponseMessage;
 import dk.game.card.user.GameUser;
+import dk.game.card.util.WebSocketHelper;
 import dk.java8.game.card.Card;
 import dk.java8.game.card.Dealer;
 import dk.java8.game.card.Deck;
@@ -71,21 +72,12 @@ public class CardGame {
                     gameUser = (GameUser)session.getUserProperties().get("user");
                     message = "Welcome back! ID : " + gameUser.getGameId();
                 }
-                try {
-                    loginResponseMessage.setMessage(message);
-                    loginResponseMessage.setLoginId(gameUser.getGameId());
-                    loginResponseMessage.setLoginStatus(true);
-                    System.out.println(loginResponseMessage.toJson());
-                    session.getBasicRemote().sendText(loginResponseMessage.toJson());
-                } catch (IOException e) {
-                    Logger.getLogger(CardGame.class.getName()).log(Level.SEVERE, null, e);
-                }
+                loginResponseMessage.setMessage(message);
+                loginResponseMessage.setLoginId(gameUser.getGameId());
+                loginResponseMessage.setLoginStatus(true);
+                WebSocketHelper.send(session, loginResponseMessage);
             } else {
-                try {
-                    session.getBasicRemote().sendText(loginResponseMessage.toJson());
-                } catch (IOException e) {
-                    Logger.getLogger(CardGame.class.getName()).log(Level.SEVERE, null, e);
-                }
+                WebSocketHelper.send(session, loginResponseMessage);
             }
         }
     }
@@ -107,11 +99,8 @@ public class CardGame {
                     hand.getCards().stream().sorted().forEach(card -> {
                         handResp.addCard(card.getSuit(), card.getRank());
                     });
-                    try {
-                        s.getBasicRemote().sendText(handResp.toJson());
-                    } catch (IOException ex) {
-                        Logger.getLogger(CardGame.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                    
+                    WebSocketHelper.send(s, handResp);
                 });
             }
         }

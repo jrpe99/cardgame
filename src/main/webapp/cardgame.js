@@ -17,6 +17,85 @@ function init() {
     do_login();
 }
 
+var ActionModel = Backbone.Model.extend({
+    initialize: function(){
+        this.on("change:time", function(model){
+            document.getElementById("timeID").value = this.get("time");
+        });
+    }    
+});
+var action = new ActionModel();    
+
+
+var HandModel = Backbone.Model.extend({});
+var hand = new HandModel();
+
+var HandView = Backbone.View.extend({
+    el: $("#hand"),
+    initialize: function(){
+        this.render();
+    },
+    render: function(){
+        // Compile the template using underscore
+        var template = _.template( $("#tpl-hand").html(), {} );
+        // Load the compiled HTML into the Backbone "el"
+        this.$el.html( template );
+    }
+});
+var handView = new HandView();
+
+var CardModel = Backbone.Model.extend({});
+var CardList = Backbone.Collection.extend({
+    model: CardModel
+});
+var CardListView = Backbone.View.extend({
+    el: $("#cardList"),
+    collection: cardList,
+    initialize: function() {
+        this.collection = new CardList();
+        this.collection.add([
+            {card : "b1fv"},
+            {card : "b1fv"},
+            {card : "b1fv"},
+            {card : "b1fv"},
+            {card : "b1fv"}
+        ]);
+        this.showCardList();
+    },
+    // PUBLIC
+    updateCardList: function(cardList) {
+        this.hideCardList();
+        this.collection.reset();
+        for(var i = 0; i < cardList.length; i++) {
+            this.collection.add({card : cardList[i]});
+        }
+        this.showCardList();
+        return this;
+    },
+    showCardList: function() {
+        var self = this;
+        this.collection.each(function(model) {
+            self.createCard(model);
+        });
+        return this;
+    },
+    // PRIVATE
+    createCard: function(model) {
+        var template = _.template( $("#tpl-card").html(), {card : model.get("card") + ".png"} );
+        this.$el.append(template);
+    },
+    removeCard: function(model) {
+        var template = _.template( $("#tpl-cardClear").html(), {} );
+        this.$el.html(template);
+    },
+    hideCardList: function() {
+        var self = this;
+        this.collection.each(function(model) {
+            self.removeCard(model);
+        });
+    }
+});
+var cardListView = new CardListView();
 
 function do_login() {
     username = getParam("name");
@@ -26,33 +105,32 @@ function do_login() {
         login();
     };
     websocket.onmessage = function(evt) {
-        handleResponse(evt);
+        action.set(JSON.parse(evt.data));
+        handleResponse();
     };
     websocket.onerror = function(evt) {
         onError(evt);
     };
 }
 
-function handleResponse(evt) {
-    var json = JSON.parse(evt.data);
-    if (json.type === "gameTimeRes") {
-        document.getElementById("timeID").value = json.time;
-    }
-    if (json.type === "handres") {
+function handleResponse() {
+    var actionType = action.get("type");
+    if (actionType === "handres") {
         //writeToScreen(evt.data);
-        document.getElementById("scoreID").value = json.score;
+        document.getElementById("scoreID").value = action.get("score");
         var cardList = [];
-        cardList = json.cardList;
+        cardList = action.get("cardList");
+        cardListView.updateCardList(cardList);
+/*
         for(var i = 1; i <= cardList.length; i++) {
             document.getElementById("card"+i).src = "cards/" + cardList[i-1] + ".png";
         }
+        */
     }
-    if (json.type === "loginres") {
-        document.getElementById("loginId").value = json.loginId;
-        document.getElementById("messageID").value = json.message;
+    if (actionType === "loginres") {
+        document.getElementById("loginId").value = action.get("loginId");
+        document.getElementById("messageID").value = action.get("message");
     }
-
-    //writeToScreen('<span style="color: blue;">RESPONSE: ' + evt.data + '</span>');
 }
 
 function login() {
