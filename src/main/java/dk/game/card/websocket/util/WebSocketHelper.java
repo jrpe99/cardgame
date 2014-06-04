@@ -1,4 +1,4 @@
-package dk.game.card.util;
+package dk.game.card.websocket.util;
 
 import dk.game.card.CardGame;
 import dk.game.card.message.GameMessage;

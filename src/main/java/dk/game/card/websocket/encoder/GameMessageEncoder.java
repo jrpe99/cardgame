@@ -1,4 +1,4 @@
-package dk.game.card.encoder;
+package dk.game.card.websocket.encoder;
 
 import dk.game.card.message.GameMessage;
 import java.io.IOException;

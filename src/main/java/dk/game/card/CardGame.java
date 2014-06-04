@@ -5,7 +5,7 @@ import dk.game.card.message.request.LoginRequestMessage;
 import dk.game.card.message.response.HandResponse;
 import dk.game.card.message.response.LoginResponseMessage;
 import dk.game.card.user.GameUser;
-import dk.game.card.util.WebSocketHelper;
+import dk.game.card.websocket.util.WebSocketHelper;
 import dk.java8.game.card.Card;
 import dk.java8.game.card.Dealer;
 import dk.java8.game.card.Deck;

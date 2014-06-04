@@ -1,7 +1,8 @@
-package dk.game.card;
+package dk.game.card.websocket.endpoint;
 
-import dk.game.card.decoder.GameMessageDecoder;
-import dk.game.card.encoder.GameMessageEncoder;
+import dk.game.card.CardGame;
+import dk.game.card.websocket.decoder.GameMessageDecoder;
+import dk.game.card.websocket.encoder.GameMessageEncoder;
 import dk.game.card.message.GameMessage;
 import dk.game.card.message.request.DealRequest;
 import dk.game.card.message.request.GameStartRequest;

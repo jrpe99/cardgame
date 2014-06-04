@@ -6,7 +6,7 @@
 
 package dk.game.card;
 
-import dk.game.card.decoder.GameMessageDecoder;
+import dk.game.card.websocket.decoder.GameMessageDecoder;
 import dk.game.card.message.GameMessage;
 import java.io.IOException;
 import java.util.logging.Level;

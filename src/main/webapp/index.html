@@ -1,27 +1,103 @@
 <!DOCTYPE html>
-<head>
-    <meta charset="utf-8"/>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title id="titleID"></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
 
-    <title id="titleID">Card Game</title>
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+    <body>
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <table class="innertable">
+                            <tbody>
+                                <tr>
+                                    <td class="label">
+                                        <p>Game time (s):</p>
+                                    </td>
+                                    <td class="value">
+                                        <input disabled id="timeID" type="text" size="20" value=""/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label">
+                                        <p>Message</p>
+                                    </td>
+                                    <td class="value">
+                                        <input disabled id="messageID" type="text" size="40" value=""/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <div id="hand"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label">
+                                        <p>Hand:</p>
+                                        <input disabled id="scoreID" type="text" size="10" value=""/>
+                                    </td>
+                                    <td>
+                                        <div id="cardList">
+                                            <div id="card"></div>
+                                        </div>
+                                    </td>
+                                </tr>
 
-    <link rel="stylesheet" href="css/main.css">
-    <script type="text/javascript" src="login.js"></script>
-
-</head>
-<body>
-    <h2>Card Game</h2>
-    <div class="centered">
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <form action="">
+                                                        <input type="button" id="joinID" onclick="joinGame();" value="Join">
+                                                    </form>
+                                                </td>
+                                                <td>
+                                                    <form action="">
+                                                        <input type="button" id="startID" onclick="startGame();" value="Start">
+                                                    </form>
+                                                </td>
+                                                <td>
+                                                    <form action="">
+                                                        <input type="button" id="dealID" onclick="deal();" value="Deal">
+                                                    </form>
+                                                </td>
+                                                <td>
+                                                    <form action="">
+                                                        <input type="button" id="stopID" onclick="stopGame();" value="Stop">
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
         <br>
+        <div id="output"></div>
 
-        <form action="">
-            <br><br><br>
-            <h3> Enter your username: </h3>
-            <input id="loginId" size="20" name="logintext" value="" type="text"/>
-            <br>
-            <input type="button" id="loginButtonID" onclick="doLogin();" value="Login">
-        </form>
-    </div>
-    <div id="loginMessage"></div>
-    <div id="output"></div>
-</body>
+
+        <script type='text/template' id='tpl-card'>
+            <div style="float: left;"><IMG SRC="cards/<%=card%>"></div>
+        </script>    
+        <script type='text/template' id='tpl-cardClear'>
+            <div style="float: left;"></div>
+        </script>    
+        <script type="text/javascript" src="lib/underscore-min.js"></script>
+        <script type="text/javascript" src="lib/jquery-2.1.1.js"></script>
+        <script type="text/javascript" src="lib/backbone-min.js"></script>
+        <script type="text/javascript" src="cardgame.js"></script>
+        <script type="text/javascript" src="cardgameBackbone.js"></script>
+    </body>
 </html>

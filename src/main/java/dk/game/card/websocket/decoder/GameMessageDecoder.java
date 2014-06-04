@@ -1,4 +1,4 @@
-package dk.game.card.decoder;
+package dk.game.card.websocket.decoder;
 
 import dk.game.card.message.GameMessage;
 import dk.game.card.message.request.DealRequest;

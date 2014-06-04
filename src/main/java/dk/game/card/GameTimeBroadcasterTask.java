@@ -1,7 +1,7 @@
 package dk.game.card;
 
 import dk.game.card.message.response.GameTimeBroadcastMessage;
-import dk.game.card.util.WebSocketHelper;
+import dk.game.card.websocket.util.WebSocketHelper;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.TimerTask;
