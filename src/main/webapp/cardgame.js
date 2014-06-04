@@ -54,9 +54,7 @@ function login() {
 }
 
 function status() {
-    writeToScreen("GET");
-    var status = new GameStatusModel();
-    writeToScreen(status.get("status"));
+    new GameStatusModel();
 }
 
 function startGame() {

@@ -20,23 +20,6 @@ var GameStatusModel = Backbone.Model.extend({
     }   
 });
 
-var HandModel = Backbone.Model.extend({});
-var hand = new HandModel();
-
-var HandView = Backbone.View.extend({
-    el: $("#hand"),
-    initialize: function(){
-        this.render();
-    },
-    render: function(){
-        // Compile the template using underscore
-        var template = _.template( $("#tpl-hand").html(), {} );
-        // Load the compiled HTML into the Backbone "el"
-        this.$el.html( template );
-    }
-});
-//var handView = new HandView();
-
 var CardModel = Backbone.Model.extend({});
 var CardList = Backbone.Collection.extend({
     model: CardModel

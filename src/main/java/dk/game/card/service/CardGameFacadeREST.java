@@ -40,7 +40,6 @@ public class CardGameFacadeREST {
     @GET
     @Produces({"application/xml", "application/json"})
     public GameStatus getState() {
-        System.out.println("GET");
         GameStatus status = new GameStatus();
         status.setStatus(GameServer.game.getState().toString());
         return status;
