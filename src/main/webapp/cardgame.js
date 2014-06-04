@@ -13,6 +13,7 @@ function getRootUri() {
 }
 
 function init() {
+    output = document.getElementById("output");
     action = new ActionModel();    
     cardListView = new CardListView();
     do_login();
@@ -50,6 +51,12 @@ function handleResponse(evt) {
 function login() {
     var json = "{\"type\":\"loginreq\"}";
     websocket.send(json);
+}
+
+function status() {
+    writeToScreen("GET");
+    var status = new GameStatusModel();
+    writeToScreen(status.get("status"));
 }
 
 function startGame() {

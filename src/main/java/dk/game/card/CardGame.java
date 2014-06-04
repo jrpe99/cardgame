@@ -31,6 +31,10 @@ public class CardGame {
 
     private GameState state;
 
+    public GameState getState() {
+        return state;
+    }
+
     /*
      * ID of the game used for communication
      */

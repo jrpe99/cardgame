@@ -20,7 +20,7 @@ import javax.websocket.server.ServerEndpoint;
 )
 public class GameServer {
 
-    private static CardGame game = new CardGame();
+    public static CardGame game = new CardGame();
     
     @OnClose
     public void handleClosedConnection(Session session, CloseReason reason) {

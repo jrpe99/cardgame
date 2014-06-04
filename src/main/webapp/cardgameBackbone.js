@@ -6,6 +6,19 @@ var ActionModel = Backbone.Model.extend({
     }    
 });
 
+var GameStatusModel = Backbone.Model.extend({
+    urlRoot: '/cardgame/webresources/status',
+    defaults: {
+        status: ''
+    },
+    initialize: function() {
+        this.fetch({
+            success: function(status) {
+                alert(status.get("status"));
+            }
+        });
+    }   
+});
 
 var HandModel = Backbone.Model.extend({});
 var hand = new HandModel();
