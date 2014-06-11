@@ -60,15 +60,76 @@ var CardListView = Backbone.View.extend({
         var template = _.template( $("#tpl-card").html(), {card : model.get("card") + ".png"} );
         this.$el.append(template);
     },
-    removeCard: function(model) {
-        var template = _.template( $("#tpl-cardClear").html(), {} );
-        this.$el.html(template);
-    },
     removeCardList: function() {
-        var self = this;
-        this.collection.each(function(model) {
-            self.removeCard(model);
-        });
+        $("#cardList").empty();
     }
 });
 
+var PlayerModel = Backbone.Model.extend({
+    defaults: {
+        playerId : '',
+        playedCard : 'b1fv'
+    }
+});
+var PlayerList = Backbone.Collection.extend({
+    model: PlayerModel
+});
+
+var PlayerListView = Backbone.View.extend({
+    el: $("#playerList"),
+    collection: playerList,
+    initialize: function() {
+        this.collection = new PlayerList();
+        this.reset();
+    },
+    // PUBLIC
+    reset: function() {
+        this.collection.reset();
+        for(var i = 1;i<=5;i++) {
+            this.collection.add(new PlayerModel({"playerId" : ""}));
+        }
+        this.showPlayerList();
+    },
+    updatePlayer: function(id, card) {
+        var self = this;
+        var playerFound = false;
+        this.collection.each(function(player) {
+            if(id === player.get("playerId")) {
+                player.set({"playedCard":card});
+                playerFound = true;
+            }
+        });
+        if(!Boolean(playerFound)) {
+            this.collection.each(function(player) {
+                if(!Boolean(playerFound) && '' === player.get("playerId")) {
+                    player.set({"playedCard":card});
+                    player.set({"playerId":id});
+                    playerFound = true;
+                }
+            });
+        }
+        this.showPlayerList();
+        return this;
+    },
+    showPlayerList: function() {
+        this.removePlayerList();
+        var self = this;
+        this.collection.each(function(player) {
+            self.createPlayer(player);
+        });
+        return this;
+    },
+    // PRIVATE
+    createPlayer: function(player) {
+        var template = _.template( $("#tpl-player").html(), 
+            {
+                playerId : player.get("playerId"), 
+                playerCard : player.get("playedCard") + ".png"
+            } 
+        );
+        this.$el.append(template);
+    },
+    removePlayerList: function() {
+        $("#playerList").empty();
+    }
+});

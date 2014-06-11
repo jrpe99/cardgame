@@ -42,7 +42,7 @@
                                         <p>Hand:</p>
                                         <input disabled id="scoreID" type="text" size="10" value=""/>
                                     </td>
-                                    <td>
+                                    <td align="center">
                                         <div id="cardList">
                                             <div id="card"></div>
                                         </div>
@@ -54,6 +54,12 @@
                                     <td>
                                         <table>
                                             <tr>
+                                                <td>
+                                                    <form action="">
+                                                        <input id="gameID" type="text" size="4" maxlength="4" value=""/>
+                                                        <input type="button" id="joinID" onclick="join();" value="Join">
+                                                    </form>
+                                                </td>
                                                 <td>
                                                     <form action="">
                                                         <input type="button" id="statusID" onclick="status();" value="Status">
@@ -74,6 +80,20 @@
                                                         <input type="button" id="stopID" onclick="stopGame();" value="Stop">
                                                     </form>
                                                 </td>
+                                                <td>
+                                                    <form action="">
+                                                        <input type="button" id="resetID" onclick="resetPlayers();" value="Reset">
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <table>
+                                            <tr>
+                                                <div id="playerList"></div>
                                             </tr>
                                         </table>
                                     </td>
@@ -89,11 +109,14 @@
 
 
         <script type='text/template' id='tpl-card'>
-            <div style="float: left;"><IMG SRC="cards/<%=card%>"></div>
+            <div style="float: left;"><IMG id="<%=id%>" onclick="return playCard(this);" src="cards/<%=card%>"></div>
         </script>    
-        <script type='text/template' id='tpl-cardClear'>
-            <div style="float: left;"></div>
-        </script>    
+        <script type='text/template' id='tpl-player'>
+            <td align="left">
+                Player: <%=playerId%>
+                <div style="float: left;"><IMG SRC="cards/<%=playerCard%>"></div>
+            </td>
+        </script>
         <script type="text/javascript" src="lib/underscore-min.js"></script>
         <script type="text/javascript" src="lib/jquery-2.1.1.js"></script>
         <script type="text/javascript" src="lib/backbone-min.js"></script>

@@ -6,6 +6,7 @@ var websocket;
 // Backbone objects
 var action;
 var cardListView;
+var playerListView;
 
 function getRootUri() {
     return "ws://" + (document.location.hostname === "" ? "localhost" : document.location.hostname) + ":" +
@@ -16,6 +17,7 @@ function init() {
     output = document.getElementById("output");
     action = new ActionModel();    
     cardListView = new CardListView();
+    playerListView = new PlayerListView();
     do_login();
 }
 
@@ -42,15 +44,27 @@ function handleResponse(evt) {
         var cardList = [];
         cardList = action.get("cardList");
         cardListView.updateCardList(cardList);
-    }
-    if (actionType === "loginres") {
+        playerListView.reset();
+    } else if (actionType === "loginres") {
         document.getElementById("messageID").value = action.get("message");
+    } else if (actionType === "playcardres") {
+        playerListView.updatePlayer(action.get("gameId"), action.get("card"));
     }
 }
 
 function login() {
     var json = "{\"type\":\"loginreq\"}";
     websocket.send(json);
+}
+
+function join() {
+    var gameId = document.getElementById("gameID").value;
+    if(gameId === '') {
+        alert("Add a game ID");
+    } else {
+        var json = "{\"type\":\"joinreq\",\"gameId\":\""+gameId+"\"}";
+        websocket.send(json);
+    }
 }
 
 function status() {
@@ -72,6 +86,15 @@ function stopGame() {
     websocket.send(json);
 }
 
+function playCard(img) {
+    var json = "{\"type\":\"playcardreq\",\"card\":\""+img.src+"\"}";
+    img.disable=true;
+    websocket.send(json);
+}
+
+function resetPlayers() {
+    $("#playerList").empty();
+}
 
 function onError(evt) {
     writeToScreen('<span style="color: red;">ERROR:</span> ' + evt.data);

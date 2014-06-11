@@ -4,7 +4,9 @@ import dk.game.card.message.GameMessage;
 import dk.game.card.message.request.DealRequest;
 import dk.game.card.message.request.GameStartRequest;
 import dk.game.card.message.request.GameStopRequest;
+import dk.game.card.message.request.JoinRequest;
 import dk.game.card.message.request.LoginRequestMessage;
+import dk.game.card.message.request.PlayCardRequest;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,6 +30,10 @@ public class GameMessageDecoder implements Decoder.Text<GameMessage> {
                 msg = mapper.readValue(s, GameStopRequest.class);
             } else if (s.contains(GameMessage.DEAL_REQUEST)) {
                 msg = mapper.readValue(s, DealRequest.class);
+            } else if (s.contains(GameMessage.JOIN_REQUEST)) {
+                msg = mapper.readValue(s, JoinRequest.class);
+            } else if (s.contains(GameMessage.PLAY_CARD_REQUEST)) {
+                msg = mapper.readValue(s, PlayCardRequest.class);
             }
         } catch (IOException ex) {
             Logger.getLogger(GameMessageDecoder.class.getName()).log(Level.SEVERE, null, ex);

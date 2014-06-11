@@ -1,27 +1,23 @@
 package dk.game.card;
 
 import dk.game.card.message.GameMessage;
+import dk.game.card.message.request.JoinRequest;
 import dk.game.card.message.request.LoginRequestMessage;
+import dk.game.card.message.request.PlayCardRequest;
 import dk.game.card.message.response.HandResponse;
 import dk.game.card.message.response.LoginResponseMessage;
+import dk.game.card.message.response.PlayCardResponse;
 import dk.game.card.user.GameUser;
 import dk.game.card.websocket.util.WebSocketHelper;
-import dk.java8.game.card.Card;
 import dk.java8.game.card.Dealer;
 import dk.java8.game.card.Deck;
 import dk.java8.game.card.Hand;
-import dk.java8.game.card.Rank;
-import dk.java8.game.card.Suit;
 import dk.java8.game.card.score.ScoreCalculator;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
 import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import javax.websocket.Session;
 
 /**
@@ -53,40 +49,54 @@ public class CardGame {
         this.state = GameState.PRE_GAME;
     }
 
-    synchronized void addSession(Session arc) {
-        sessionList.add(arc);
-    }
-
     public synchronized void removeSession(Session arc) {
         sessionList.remove(arc);
     }
 
     public void handleLoginRequest(LoginRequestMessage messsage, Session session) {
         synchronized (id) {
+        }
+    }
+
+    public void handlePlayCardRequest(PlayCardRequest message, Session session) {
+        synchronized (id) {
+            GameUser user = (GameUser)session.getUserProperties().get("user");
+            sessionList.forEach(s -> {
+                String cardUrl = message.getCard();
+                String card = cardUrl.substring(cardUrl.lastIndexOf("/")+1, cardUrl.lastIndexOf("."));
+                PlayCardResponse playedCard = new PlayCardResponse(user.getGameId(), card);
+                WebSocketHelper.send(s, playedCard);
+            });
+        }
+    }
+
+    public void handleJoinRequest(JoinRequest message, Session session) {
+        synchronized (id) {
             LoginResponseMessage loginResponseMessage = new LoginResponseMessage();
-            if (state == GameState.PRE_GAME || state == GameState.GAME_RUNNING) {
-                String message = null;
+            String welcomeMessage = "";
+            if (state == GameState.PRE_GAME && getRemoteClients().size() < 5) {
                 GameUser gameUser = null;
                 if (!getRemoteClients().contains(session)) {
-                    this.addSession(session);
-                    gameUser = new GameUser(UUID.randomUUID().toString());
+                    gameUser = new GameUser(message.getGameId());
                     session.getUserProperties().put("user", gameUser);
-                    message = "Welcome! ID : " + gameUser.getGameId();
+                    welcomeMessage = "Welcome " + gameUser.getGameId() + " !";
+                    this.sessionList.add(session);
                 } else {
                     gameUser = (GameUser)session.getUserProperties().get("user");
-                    message = "Welcome back! ID : " + gameUser.getGameId();
+                    welcomeMessage = "Welcome! You have joined the game :-)";
                 }
-                loginResponseMessage.setMessage(message);
+                loginResponseMessage.setMessage(welcomeMessage);
                 loginResponseMessage.setLoginId(gameUser.getGameId());
                 loginResponseMessage.setLoginStatus(true);
                 WebSocketHelper.send(session, loginResponseMessage);
             } else {
+                welcomeMessage = "Not possible to join the game :-(";
                 WebSocketHelper.send(session, loginResponseMessage);
             }
         }
     }
 
-    public void handleDealRequest(GameMessage message, Session arc) {
+    public void handleDealRequest(Session arc) {
         synchronized (id) {
             if (state == GameState.GAME_RUNNING) {
                 int numberOfUsers = sessionList.size();
@@ -125,52 +135,18 @@ public class CardGame {
 
     public void switchStateToGameFinished() {
         synchronized (id) {
-            state = GameState.GAME_FINISHED;
+            state = GameState.PRE_GAME;
         }
         stopGameTimeBroadcast();
-        sendGameResults();
     }
 
     public void switchStateToGameStarted() {
-        if(state == GameState.PRE_GAME || state == GameState.GAME_FINISHED) {
+        if(state == GameState.PRE_GAME) {
             synchronized (id) {
                 state = GameState.GAME_RUNNING;
             }
             startGameTimeBroadcast();
         }
-    }
-
-    private void sendGameResults() {
-        Session bestBidder = null;
-/*
-        if(bestBidderName != null){
-            for (Session session : getRemoteClients()) {
-                if(session.getUserProperties().get("name").equals(bestBidderName)){
-                    bestBidder = session;
-                }
-            }
-        }
-
-        if (bestBidder!= null) {
-            CardGameMessage.ResultMessage winnerMessage = new CardGameMessage.ResultMessage(id, String.format("Congratulations, You won the auction and will pay %.0f.", bestBid));
-            try {
-                bestBidder.getBasicRemote().sendObject(winnerMessage);
-            } catch (IOException | EncodeException e) {
-                Logger.getLogger(CardGame.class.getName()).log(Level.SEVERE, null, e);
-            }
-        }
-
-        CardGameMessage.ResultMessage loserMessage = new CardGameMessage.ResultMessage(id, String.format("You did not win the auction. The item was sold for %.0f.", bestBid));
-        for (Session arc : getRemoteClients()) {
-            if (arc != bestBidder) {
-                try {
-                    arc.getBasicRemote().sendObject(loserMessage);
-                } catch (IOException | EncodeException e) {
-                    Logger.getLogger(CardGame.class.getName()).log(Level.SEVERE, null, e);
-                }
-            }
-        }
-*/        
     }
 
     private void startGameTimeBroadcast() {
@@ -184,8 +160,10 @@ public class CardGame {
     }
 
     private void stopGameTimeBroadcast() {
-        gameRunningTimer.cancel();
-        gameRunningTimer = null;
+        if(gameRunningTimer != null) {
+            gameRunningTimer.cancel();
+            gameRunningTimer = null;
+        }
     }
 
     public String getId() {

@@ -7,7 +7,9 @@ import dk.game.card.message.GameMessage;
 import dk.game.card.message.request.DealRequest;
 import dk.game.card.message.request.GameStartRequest;
 import dk.game.card.message.request.GameStopRequest;
+import dk.game.card.message.request.JoinRequest;
 import dk.game.card.message.request.LoginRequestMessage;
+import dk.game.card.message.request.PlayCardRequest;
 import javax.websocket.CloseReason;
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
@@ -36,7 +38,11 @@ public class GameServer {
         } else if(message instanceof GameStopRequest) {
             game.switchStateToGameFinished();
         } else if(message instanceof DealRequest) {
-            game.handleDealRequest(message, session);
+            game.handleDealRequest(session);
+        } else if(message instanceof JoinRequest) {
+            game.handleJoinRequest((JoinRequest)message, session);
+        } else if(message instanceof PlayCardRequest) {
+            game.handlePlayCardRequest((PlayCardRequest)message, session);
         }
     }
 }
