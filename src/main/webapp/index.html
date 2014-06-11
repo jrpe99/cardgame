@@ -11,110 +11,110 @@
     </head>
     <body>
         <table>
-            <tbody>
-                <tr>
-                    <td>
-                        <table class="innertable">
-                            <tbody>
-                                <tr>
-                                    <td class="label">
-                                        <p>Game time (s):</p>
-                                    </td>
-                                    <td class="value">
-                                        <input disabled id="timeID" type="text" size="20" value=""/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="label">
-                                        <p>Message</p>
-                                    </td>
-                                    <td class="value">
-                                        <input disabled id="messageID" type="text" size="40" value=""/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <div id="hand"></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="label">
-                                        <p>Hand:</p>
-                                        <input disabled id="scoreID" type="text" size="10" value=""/>
-                                    </td>
-                                    <td align="center">
-                                        <div id="cardList">
-                                            <div id="card"></div>
-                                        </div>
-                                    </td>
-                                </tr>
+            <tr>
+                <td>
+                    <table class="innertable">
+                        <tr>
+                            <td class="label">
+                                <p>Game time (s):</p>
+                            </td>
+                            <td class="value">
+                                <input disabled id="timeID" type="text" size="20" value=""/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">
+                                <p>Message</p>
+                            </td>
+                            <td class="value">
+                                <input disabled id="messageID" type="text" size="40" value=""/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div id="hand"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="label">
+                                <p>Hand:</p>
+                                <input disabled id="scoreID" type="text" size="10" value=""/>
+                            </td>
+                            <td align="center">
+                                <div id="cardList">
+                                    <div id="card"></div>
+                                </div>
+                            </td>
+                        </tr>
 
-                                <tr>
-                                    <td></td>
-                                    <td>
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                    <form action="">
-                                                        <input id="gameID" type="text" size="4" maxlength="4" value=""/>
-                                                        <input type="button" id="joinID" onclick="join();" value="Join">
-                                                    </form>
-                                                </td>
-                                                <td>
-                                                    <form action="">
-                                                        <input type="button" id="statusID" onclick="status();" value="Status">
-                                                    </form>
-                                                </td>
-                                                <td>
-                                                    <form action="">
-                                                        <input type="button" id="startID" onclick="startGame();" value="Start">
-                                                    </form>
-                                                </td>
-                                                <td>
-                                                    <form action="">
-                                                        <input type="button" id="dealID" onclick="deal();" value="Deal">
-                                                    </form>
-                                                </td>
-                                                <td>
-                                                    <form action="">
-                                                        <input type="button" id="stopID" onclick="stopGame();" value="Stop">
-                                                    </form>
-                                                </td>
-                                                <td>
-                                                    <form action="">
-                                                        <input type="button" id="resetID" onclick="resetPlayers();" value="Reset">
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <table>
-                                            <tr>
-                                                <div id="playerList"></div>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-            </tbody>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <form action="">
+                                                <input id="gameID" type="text" size="4" maxlength="4" value=""/>
+                                                <input type="button" id="joinID" onclick="join();" value="Join">
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form action="">
+                                                <input type="button" id="statusID" onclick="status();" value="Status">
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form action="">
+                                                <input type="button" id="startID" onclick="startGame();" value="Start">
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form action="">
+                                                <input type="button" id="dealID" onclick="deal();" value="Deal">
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form action="">
+                                                <input type="button" id="stopID" onclick="stopGame();" value="Stop">
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form action="">
+                                                <input type="button" id="resetID" onclick="resetPlayers();" value="Reset">
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <table>
+                                    <tr>
+                                        <div id="playerList"></div>
+                                    </tr>
+                                </table    
+                            </td>
+                        </tr>
+                    </table    
+                </td>
+            </tr>
         </table>
         <br>
         <div id="output"></div>
 
 
         <script type='text/template' id='tpl-card'>
-                    <div style="float: left;"><IMG onclick="return playCard(this);" src="cards/<%=card%>"></div>
+            <div id="div1">
+                <IMG onclick="return playCard(this);" src="cards/<%=card%>">
+            </div>
         </script>    
         <script type='text/template' id='tpl-player'>
             <td align="left">
                 Player: <%=playerId%>
-                <div style="float: left;"><IMG SRC="cards/<%=playerCard%>"></div>
+                <div id="div1">
+                    <IMG SRC="cards/<%=playerCard%>">
+                </div>
             </td>
         </script>
         <script type="text/javascript" src="lib/underscore-min.js"></script>

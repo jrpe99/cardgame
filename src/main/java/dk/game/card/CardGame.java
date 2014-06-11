@@ -46,6 +46,9 @@ public class CardGame {
 
     public synchronized void removeSession(Session arc) {
         sessionList.remove(arc);
+        if(sessionList.isEmpty()) {
+            switchStateToGameFinished();
+        }
     }
 
     public void handleLoginRequest(LoginRequestMessage messsage, Session session) {

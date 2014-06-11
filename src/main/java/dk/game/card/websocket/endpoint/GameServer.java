@@ -16,7 +16,8 @@ import javax.websocket.OnMessage;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-@ServerEndpoint(value = "/play",
+@ServerEndpoint(
+        value = "/play",
         decoders = {GameMessageDecoder.class},
         encoders = {GameMessageEncoder.class}
 )
