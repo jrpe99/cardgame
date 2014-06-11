@@ -40,13 +40,13 @@ function handleResponse(evt) {
     var actionType = action.get("type");
     if (actionType === "handres") {
         //writeToScreen(evt.data);
-        document.getElementById("scoreID").value = action.get("score");
+        $("#scoreID").val(action.get("score"));
         var cardList = [];
         cardList = action.get("cardList");
         cardListView.updateCardList(cardList);
         playerListView.reset();
     } else if (actionType === "loginres") {
-        document.getElementById("messageID").value = action.get("message");
+        $("#messageID").val(action.get("message"));
     } else if (actionType === "playcardres") {
         playerListView.updatePlayer(action.get("gameId"), action.get("card"));
     }

@@ -16,7 +16,7 @@
                     <table class="innertable">
                         <tr>
                             <td class="label">
-                                <p>Game time (s):</p>
+                                <p>Game time:</p>
                             </td>
                             <td class="value">
                                 <input disabled id="timeID" type="text" size="20" value=""/>
@@ -88,7 +88,8 @@
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="2">
+                            <td></td>
+                            <td>
                                 <table>
                                     <tr>
                                         <div id="playerList"></div>
@@ -111,10 +112,20 @@
         </script>    
         <script type='text/template' id='tpl-player'>
             <td align="left">
-                Player: <%=playerId%>
-                <div id="div1">
-                    <IMG SRC="cards/<%=playerCard%>">
-                </div>
+            <table>
+                <tr>
+                    <td class="<%=playerStyle%>" align="center">
+                        ID: <%=playerId%>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <div id="div1">
+                            <IMG SRC="cards/<%=playerCard%>">
+                        </div>
+                    </td>
+                </tr>
+            </table>
             </td>
         </script>
         <script type="text/javascript" src="lib/underscore-min.js"></script>

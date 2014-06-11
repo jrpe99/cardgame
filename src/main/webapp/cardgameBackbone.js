@@ -68,7 +68,8 @@ var CardListView = Backbone.View.extend({
 var PlayerModel = Backbone.Model.extend({
     defaults: {
         playerId : '',
-        playedCard : 'b1fv'
+        playedCard : 'b1fv',
+        currentPlayer : false
     }
 });
 var PlayerList = Backbone.Collection.extend({
@@ -93,22 +94,25 @@ var PlayerListView = Backbone.View.extend({
     updatePlayer: function(id, card) {
         var self = this;
         var playerFound = false;
+        var currentPlayer;
         this.collection.each(function(player) {
             if(id === player.get("playerId")) {
-                player.set({"playedCard":card});
+                player.set({"playedCard":card, "currentPlayer":true});
                 playerFound = true;
+                currentPlayer = player;
             }
         });
         if(!Boolean(playerFound)) {
             this.collection.each(function(player) {
                 if(!Boolean(playerFound) && '' === player.get("playerId")) {
-                    player.set({"playedCard":card});
-                    player.set({"playerId":id});
+                    player.set({"playedCard":card, "playerId":id, "currentPlayer":true});
                     playerFound = true;
+                    currentPlayer = player;
                 }
             });
         }
         this.showPlayerList();
+        currentPlayer.set({"currentPlayer":false})
         return this;
     },
     showPlayerList: function() {
@@ -121,10 +125,15 @@ var PlayerListView = Backbone.View.extend({
     },
     // PRIVATE
     createPlayer: function(player) {
+        var currentPlayerStyle = '';
+        if(Boolean(player.get("currentPlayer"))) {
+            currentPlayerStyle = 'playerBold';
+        }
         var template = _.template( $("#tpl-player").html(), 
             {
                 playerId : player.get("playerId"), 
-                playerCard : player.get("playedCard") + ".png"
+                playerCard : player.get("playedCard") + ".png",
+                playerStyle : currentPlayerStyle
             } 
         );
         this.$el.append(template);
