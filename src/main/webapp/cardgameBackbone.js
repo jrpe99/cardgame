@@ -1,7 +1,7 @@
 var ActionModel = Backbone.Model.extend({
     initialize: function(){
-        this.on("change:time", function(model){
-            document.getElementById("timeID").value = this.get("time");
+        this.on("change:time", function(){
+            $("#timeID").val(this.get("time"));
         });
     }    
 });

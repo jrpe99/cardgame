@@ -18,9 +18,6 @@ import java.util.List;
 import java.util.Timer;
 import javax.websocket.Session;
 
-/**
- * Implements the card game protocol.
- */
 public class CardGame {
 
     private GameState state;
