@@ -1,6 +1,9 @@
 package dk.game.card;
 
-import dk.game.card.message.GameMessage;
+import dk.game.card.deck.Dealer;
+import dk.game.card.deck.Deck;
+import dk.game.card.deck.Hand;
+import dk.game.card.deck.ScoreCalculator;
 import dk.game.card.message.request.JoinRequest;
 import dk.game.card.message.request.LoginRequestMessage;
 import dk.game.card.message.request.PlayCardRequest;
@@ -9,15 +12,10 @@ import dk.game.card.message.response.LoginResponseMessage;
 import dk.game.card.message.response.PlayCardResponse;
 import dk.game.card.user.GameUser;
 import dk.game.card.websocket.util.WebSocketHelper;
-import dk.java8.game.card.Dealer;
-import dk.java8.game.card.Deck;
-import dk.java8.game.card.Hand;
-import dk.java8.game.card.score.ScoreCalculator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
-import java.util.UUID;
 import javax.websocket.Session;
 
 /**

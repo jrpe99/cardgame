@@ -26,11 +26,6 @@
             <artifactId>jackson-mapper-asl</artifactId>
             <version>1.9.3</version>
         </dependency>
-        <dependency>
-            <groupId>dk.game.card</groupId>
-            <artifactId>card-game</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
     </dependencies>
     
     <build>

@@ -6,10 +6,9 @@
 
 package dk.game.card.message.response;
 
+import dk.game.card.deck.Rank;
+import dk.game.card.deck.Suit;
 import dk.game.card.message.GameMessage;
-import dk.java8.game.card.Card;
-import dk.java8.game.card.Rank;
-import dk.java8.game.card.Suit;
 import java.util.ArrayList;
 import java.util.List;
 

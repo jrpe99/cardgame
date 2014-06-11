@@ -1,6 +1,7 @@
 package dk.game.card.user;
 
-import dk.java8.game.card.Hand;
+import dk.game.card.deck.Hand;
+
 
 /**
  *
