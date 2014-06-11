@@ -88,8 +88,8 @@ function stopGame() {
 
 function playCard(img) {
     var json = "{\"type\":\"playcardreq\",\"card\":\""+img.src+"\"}";
-    img.disable=true;
     websocket.send(json);
+    $(img).hide();
 }
 
 function resetPlayers() {
