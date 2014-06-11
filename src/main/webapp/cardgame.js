@@ -8,6 +8,9 @@ var action;
 var cardListView;
 var playerListView;
 
+var models = app.module("models");
+var views = app.module("views");
+
 function getRootUri() {
     return "ws://" + (document.location.hostname === "" ? "localhost" : document.location.hostname) + ":" +
             (document.location.port === "" ? "8080" : document.location.port);
@@ -15,9 +18,9 @@ function getRootUri() {
 
 function init() {
     output = document.getElementById("output");
-    action = new ActionModel();    
-    cardListView = new CardListView();
-    playerListView = new PlayerListView();
+    action = new models.ActionModel();    
+    cardListView = new views.CardListView();
+    playerListView = new views.PlayerListView();
     do_login();
 }
 
