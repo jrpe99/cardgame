@@ -59,6 +59,7 @@ public class CardGame {
     public void handlePlayCardRequest(PlayCardRequest message, Session session) {
         synchronized (id) {
             GameUser user = (GameUser)session.getUserProperties().get("user");
+            user.getHand().removeCard(message.getCard());
             sessionList.forEach(s -> {
                 String cardUrl = message.getCard();
                 String card = cardUrl.substring(cardUrl.lastIndexOf("/")+1, cardUrl.lastIndexOf("."));

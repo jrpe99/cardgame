@@ -1,21 +1,30 @@
 package dk.game.card.deck;
 
-import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Hand implements Comparator<Hand> {
 
     private Score score = null;
-    private List<Card> hand = new ArrayList<Card>();
+    private Map<String, Card> hand = new HashMap<>();
 
     public void addCard(Card card) {
-        hand.add(card);
+        hand.put(card.getSuit().toString()+card.getRank().toString(), card);
     }
 
+    public void removeCard(Card card) {
+        removeCard(card.getSuit().toString()+card.getRank().toString());
+    }
+    
+    public void removeCard(String card) {
+        hand.remove(card);
+    }
+    
     public List<Card> getCards() {
-        return hand;
+        return hand.values().stream().collect(Collectors.toList());
     }
 
     public List<Suit> getSuitList() {

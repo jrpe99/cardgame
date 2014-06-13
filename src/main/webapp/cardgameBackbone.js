@@ -73,7 +73,7 @@ var moduleCache = {
     models.PlayerModel = Backbone.Model.extend({
         defaults: {
             playerId: '',
-            playedCard: 'b1fv',
+            playedCard: 'empty',
             currentPlayer: false
         }
     });
