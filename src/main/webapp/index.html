@@ -53,32 +53,27 @@
                                         <td>
                                             <form action="">
                                                 <input id="gameID" type="text" size="4" maxlength="4" value=""/>
-                                                <input type="button" id="joinID" onclick="join();" value="Join">
+                                                <input type="button" id="joinID" onclick="cardGame.join();" value="Join">
                                             </form>
                                         </td>
                                         <td>
                                             <form action="">
-                                                <input type="button" id="dealID" onclick="deal();" value="Deal">
+                                                <input type="button" id="dealID" onclick="cardGame.deal();" value="Deal">
                                             </form>
                                         </td>
                                         <td>
                                             <form action="">
-                                                <input type="button" id="startID" onclick="startGame();" value="Start">
+                                                <input type="button" id="startID" onclick="cardGame.startGame();" value="Start">
                                             </form>
                                         </td>
                                         <td>
                                             <form action="">
-                                                <input type="button" id="stopID" onclick="stopGame();" value="Stop">
+                                                <input type="button" id="stopID" onclick="cardGame.stopGame();" value="Stop">
                                             </form>
                                         </td>
                                         <td>
                                             <form action="">
-                                                <input type="button" id="statusID" onclick="status();" value="Status">
-                                            </form>
-                                        </td>
-                                        <td>
-                                            <form action="">
-                                                <input type="button" id="resetID" onclick="resetPlayers();" value="Reset">
+                                                <input type="button" id="statusID" onclick="cardGame.status();" value="Status">
                                             </form>
                                         </td>
                                     </tr>
@@ -105,7 +100,7 @@
 
         <script type='text/template' id='tpl-card'>
             <div id="div1">
-                <IMG onclick="return playCard(this);" src="cards/<%=card%>">
+                <IMG onclick="return cardGame.playCard(this);" src="cards/<%=card%>">
             </div>
         </script>    
         <script type='text/template' id='tpl-player'>
