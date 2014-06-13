@@ -1,5 +1,4 @@
 var websocket;
-var output = document.getElementById("output");
 
 function initWebSocket() {
     var uri = "ws://" + (document.location.hostname === "" ? "localhost" : document.location.hostname) + ":" +
@@ -141,7 +140,6 @@ var moduleCache = {
             this.collection = new models.PlayerList();
             this.reset();
         },
-        // PUBLIC
         reset: function() {
             this.collection.reset();
             for (var i = 1; i <= 5; i++) {
@@ -150,7 +148,6 @@ var moduleCache = {
             this.showPlayerList();
         },
         updatePlayer: function(id, card) {
-            var self = this;
             var playerFound = false;
             var currentPlayer;
             this.collection.each(function(player) {
@@ -181,7 +178,6 @@ var moduleCache = {
             });
             return this;
         },
-        // PRIVATE
         createPlayer: function(player) {
             var currentPlayerStyle = '';
             if (Boolean(player.get("currentPlayer"))) {
