@@ -92,7 +92,7 @@
 
         <script type='text/template' id='tpl-card'>
             <div id="div1">
-                <IMG onclick="return cardGame.playCard(this);" src="cards/<%=card%>">
+                <IMG onclick="return action.playCard(this);" src="cards/<%=card%>">
             </div>
         </script>    
         <script type='text/template' id='tpl-player'>
@@ -116,6 +116,10 @@
         <script type="text/javascript" src="lib/underscore-min.js"></script>
         <script type="text/javascript" src="lib/jquery-2.1.1.js"></script>
         <script type="text/javascript" src="lib/backbone-min.js"></script>
-        <script type="text/javascript" src="cardgameBackbone.js"></script>
+        <script type="text/javascript" src="cardgameModule.js"></script>
+        <script type="text/javascript" src="cardgameModel.js"></script>
+        <script type="text/javascript" src="cardgameView.js"></script>
+        <script type="text/javascript" src="cardgameWebSocket.js"></script>
+        <script type="text/javascript" src="cardgameApp.js"></script>
     </body>
 </html>
