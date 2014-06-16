@@ -210,34 +210,34 @@ var CardGameRouter = Backbone.Router.extend({
         this.playerListView = new views.PlayerListView();
     },
     login: function() {
-        var json = "{\"type\":\"loginreq\"}";
-        websocket.send(json);
+        var action = new models.ActionModel().set({"type":"loginreq"});
+        websocket.send(JSON.stringify(action));
     },
     join: function() {
         var gameId = document.getElementById("gameID").value;
         if (gameId === '') {
             alert("Add a game ID");
         } else {
-            var json = "{\"type\":\"joinreq\",\"gameId\":\"" + gameId + "\"}";
-            websocket.send(json);
+            var action = new models.ActionModel().set({"type":"joinreq", "gameId":gameId});
+            websocket.send(JSON.stringify(action));
         }
     },
     startGame: function() {
-        var json = "{\"type\":\"startreq\"}";
-        websocket.send(json);
+        var action = new models.ActionModel().set({"type":"startreq"});
+        websocket.send(JSON.stringify(action));
     },
 
     deal: function() {
-        var json = "{\"type\":\"dealreq\"}";
-        websocket.send(json);
+        var action = new models.ActionModel().set({"type":"dealreq"});
+        websocket.send(JSON.stringify(action));
     },
     stopGame: function() {
-        var json = "{\"type\":\"stopreq\"}";
-        websocket.send(json);
+        var action = new models.ActionModel().set({"type":"stopreq"});
+        websocket.send(JSON.stringify(action));
     },
     playCard: function(img) {
-        var json = "{\"type\":\"playcardreq\",\"card\":\""+img.src+"\"}";
-        websocket.send(json);
+        var action = new models.ActionModel().set({"type":"playcardreq","card":img.src});
+        websocket.send(JSON.stringify(action));
         $(img).hide();
     },
     status: function() {
