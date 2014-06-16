@@ -244,18 +244,18 @@ var CardGameRouter = Backbone.Router.extend({
         new models.GameStatusModel();
     },
     handleServerResponse: function(evt) {
-        this.action.set(JSON.parse(evt.data));
-        var actionType = this.action.get("type");
+        var action = new models.ActionModel().set(JSON.parse(evt.data));
+        var actionType = action.get("type");
         if (actionType === "handres") {
-            $("#scoreID").val(this.action.get("score"));
+            $("#scoreID").val(action.get("score"));
             var cardList = [];
-            cardList = this.action.get("cardList");
+            cardList = action.get("cardList");
             this.cardListView.updateCardList(cardList);
             this.playerListView.reset();
         } else if (actionType === "loginres") {
-            $("#messageID").val(this.action.get("message"));
+            $("#messageID").val(action.get("message"));
         } else if (actionType === "playcardres") {
-            this.playerListView.updatePlayer(this.action.get("gameId"), this.action.get("card"));
+            this.playerListView.updatePlayer(action.get("gameId"), action.get("card"));
         }
     }
 });
