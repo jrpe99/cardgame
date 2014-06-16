@@ -61,12 +61,13 @@ var moduleCache = {
         defaults: {
             status: ''
         },
-        initialize: function() {
+        getStatus: function() {
             this.fetch({
                 success: function(status) {
                     alert(status.get("status"));
                 }
             });
+            return this;
         }
     });
 
@@ -146,6 +147,7 @@ var moduleCache = {
                 this.collection.add(new models.PlayerModel({"playerId": ""}));
             }
             this.showPlayerList();
+            return this;
         },
         updatePlayer: function(id, card) {
             var playerFound = false;
@@ -191,6 +193,7 @@ var moduleCache = {
                     }
             );
             this.$el.append(template);
+            return this;
         },
         removePlayerList: function() {
             $("#playerList").empty();
@@ -212,6 +215,7 @@ var CardGameRouter = Backbone.Router.extend({
     login: function() {
         var action = new models.ActionModel().set({"type":"loginreq"});
         websocket.send(JSON.stringify(action));
+        return this;
     },
     join: function() {
         var gameId = document.getElementById("gameID").value;
@@ -221,31 +225,38 @@ var CardGameRouter = Backbone.Router.extend({
             var action = new models.ActionModel().set({"type":"joinreq", "gameId":gameId});
             websocket.send(JSON.stringify(action));
         }
+        return this;
     },
     startGame: function() {
         var action = new models.ActionModel().set({"type":"startreq"});
         websocket.send(JSON.stringify(action));
+        return this;
     },
 
     deal: function() {
         var action = new models.ActionModel().set({"type":"dealreq"});
         websocket.send(JSON.stringify(action));
+        return this;
     },
     stopGame: function() {
         var action = new models.ActionModel().set({"type":"stopreq"});
         websocket.send(JSON.stringify(action));
+        return this;
     },
     playCard: function(img) {
         var action = new models.ActionModel().set({"type":"playcardreq","card":img.src});
         websocket.send(JSON.stringify(action));
         $(img).hide();
+        return this;
     },
     status: function() {
-        new models.GameStatusModel();
+        new models.GameStatusModel().getStatus();
+        return this;
     },
     handleServerResponse: function(evt) {
         var action = new models.ActionModel().set(JSON.parse(evt.data));
         var actionType = action.get("type");
+        
         if (actionType === "handres") {
             $("#scoreID").val(action.get("score"));
             var cardList = [];
