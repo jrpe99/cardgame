@@ -1,4 +1,14 @@
 (function(views) {
+    views.GameStatusView = Backbone.View.extend({
+        el: $("#timeID"),
+        updateTime: function(time) {
+            $("#timeID").html("<b>Time: " + time + "</b>");
+        },
+        updateMessage: function(msg) {
+            $("#messageID").html("<b>" + msg + "</b>");
+        }
+    });
+    
     views.CardListView = Backbone.View.extend({
         el: $("#cardList"),
         collection: cardList,

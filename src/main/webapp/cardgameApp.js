@@ -8,6 +8,7 @@ var CardGameRouter = Backbone.Router.extend({
 */
 var websocket;
 var action = new models.ActionModel();
+var gameStatusView = new views.GameStatusView();
 var cardListView = new views.CardListView();
 var playerListView = new views.PlayerListView();
 

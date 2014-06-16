@@ -15,23 +15,15 @@
                 <td>
                     <table class="innertable">
                         <tr>
-                            <td class="label">
-                                <p>Game time:</p>
-                            </td>
                             <td class="value">
-                                <input disabled id="timeID" type="text" size="20" value=""/>
+                                <div id="timeID"></div>
+                            </td>
+                            <td>
+                                <div id="messageID"></div>
                             </td>
                         </tr>
                         <tr>
-                            <td class="label">
-                                <p>Message</p>
-                            </td>
-                            <td class="value">
-                                <input disabled id="messageID" type="text" size="40" value=""/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
+                            <td align="center" colspan="2">
                                 <div id="hand"></div>
                             </td>
                         </tr>
@@ -51,7 +43,7 @@
                                 <table>
                                     <tr>
                                         <td>
-                                            <input id="gameID" type="text" size="4" maxlength="4" value=""/>
+                                            <input id="gameID" type="text" size="10" maxlength="10" value=""/>
                                         </td>
                                         <td>
                                             <div id="joinAction"></div>
@@ -116,6 +108,7 @@
         <script type="text/javascript" src="lib/underscore-min.js"></script>
         <script type="text/javascript" src="lib/jquery-2.1.1.js"></script>
         <script type="text/javascript" src="lib/backbone-min.js"></script>
+        
         <script type="text/javascript" src="cardgameModule.js"></script>
         <script type="text/javascript" src="cardgameModel.js"></script>
         <script type="text/javascript" src="cardgameView.js"></script>

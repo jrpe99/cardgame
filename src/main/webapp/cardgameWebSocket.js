@@ -27,7 +27,7 @@ function initWebSocket(cardListView, playerListView) {
             cardListView.updateCardList(cardList);
             playerListView.reset();
         } else if (actionType === "loginres") {
-            $("#messageID").val(action.get("message"));
+            gameStatusView.updateMessage(action.get("message"));
         } else if (actionType === "playcardres") {
             playerListView.updatePlayer(action.get("gameId"), action.get("card"));
         }

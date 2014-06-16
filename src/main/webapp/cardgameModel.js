@@ -2,7 +2,7 @@
     models.ActionModel = Backbone.Model.extend({
         initialize: function() {
             this.on("change:time", function() {
-                $("#timeID").val(this.get("time"));
+                gameStatusView.updateTime(this.get("time"));
             });
         },
         joinAction: function() {
