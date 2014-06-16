@@ -54,7 +54,33 @@ var moduleCache = {
             this.on("change:time", function() {
                 $("#timeID").val(this.get("time"));
             });
+        },
+        joinAction: function() {
+            var gameId = $("#gameID").val();
+            if (gameId === '') {
+                alert("Add a game ID");
+            } else {
+                this.set({"type":"joinreq", "gameId":gameId});
+                websocket.send(JSON.stringify(this));
+            }
+            return this;
+        },
+        dealAction: function() {
+            this.set({"type":"dealreq"});
+            websocket.send(JSON.stringify(this));
+            return this;
+        },
+        startGameAction: function() {
+            this.set({"type":"startreq"});
+            websocket.send(JSON.stringify(this));
+            return this;
+        },
+        stopAction: function() {
+            this.set({"type":"stopreq"});
+            websocket.send(JSON.stringify(this));
+            return this;
         }
+        
     });
     models.GameStatusModel = Backbone.Model.extend({
         urlRoot: '/cardgame/webresources/status',
@@ -199,9 +225,94 @@ var moduleCache = {
             $("#playerList").empty();
         }
     });
+
 })(moduleCache.module("views"));
 
 
+// Action views (buttons)
+(function (views) {
+    views.JoinActionView = Backbone.View.extend({
+        el: $("#joinAction"),
+        initialize: function(){
+            this.joinView();
+        },
+        events: {
+            "click #joinButton": "joinAction"
+        },
+        joinAction: function() {
+            new models.ActionModel().joinAction();
+            return this;
+        },
+        joinView: function() {
+            $(this.el).html("<button id='joinButton' value='join'>Join</button>");            
+        }
+    });
+    views.StartGameActionView = Backbone.View.extend({
+        el: $("#startGameAction"),
+        initialize: function(){
+            this.startGameView();
+        },
+        events: {
+            "click #startGameButton": "startGameAction"
+        },
+        startGameAction: function() {
+            new models.ActionModel().startGameAction();
+            return this;
+        },
+        startGameView: function() {
+            $(this.el).html("<button id='startGameButton' value='start'>Start</button>");            
+        }
+    });
+    views.DealActionView = Backbone.View.extend({
+        el: $("#dealAction"),
+        initialize: function(){
+            this.dealView();
+        },
+        events: {
+            "click #dealButton": "dealAction"
+        },
+        dealAction: function() {
+            new models.ActionModel().dealAction();
+            return this;
+        },
+        dealView: function() {
+            $(this.el).html("<button id='dealButton' value='deal'>Deal</button>");            
+        }
+    });
+    views.StopGameActionView = Backbone.View.extend({
+        el: $("#stopGameAction"),
+        initialize: function(){
+            this.stopView();
+        },
+        events: {
+            "click #stopButton": "stopAction"
+        },
+        stopAction: function() {
+            new models.ActionModel().stopAction();
+            return this;
+        },
+        stopView: function() {
+            $(this.el).html("<button id='stopButton' value='stop'>Stop</button>");            
+        }
+    });
+    views.StatusActionView = Backbone.View.extend({
+        el: $("#statusAction"),
+        initialize: function(){
+            this.statusView();
+        },
+        events: {
+            "click #statusButton": "statusAction"
+        },
+        statusAction: function() {
+            new models.GameStatusModel().getStatus();
+            return this;
+        },
+        statusView: function() {
+            $(this.el).html("<button id='statusButton' value='status'>Status</button>");            
+        }
+    });
+    
+})(moduleCache.module("views"));
 
 var models = moduleCache.module("models");
 var views = moduleCache.module("views");
@@ -211,35 +322,14 @@ var CardGameRouter = Backbone.Router.extend({
         this.action = new models.ActionModel();
         this.cardListView = new views.CardListView();
         this.playerListView = new views.PlayerListView();
+        new views.JoinActionView();
+        new views.StartGameActionView();
+        new views.DealActionView();
+        new views.StopGameActionView();
+        new views.StatusActionView();
     },
     login: function() {
         var action = new models.ActionModel().set({"type":"loginreq"});
-        websocket.send(JSON.stringify(action));
-        return this;
-    },
-    join: function() {
-        var gameId = document.getElementById("gameID").value;
-        if (gameId === '') {
-            alert("Add a game ID");
-        } else {
-            var action = new models.ActionModel().set({"type":"joinreq", "gameId":gameId});
-            websocket.send(JSON.stringify(action));
-        }
-        return this;
-    },
-    startGame: function() {
-        var action = new models.ActionModel().set({"type":"startreq"});
-        websocket.send(JSON.stringify(action));
-        return this;
-    },
-
-    deal: function() {
-        var action = new models.ActionModel().set({"type":"dealreq"});
-        websocket.send(JSON.stringify(action));
-        return this;
-    },
-    stopGame: function() {
-        var action = new models.ActionModel().set({"type":"stopreq"});
         websocket.send(JSON.stringify(action));
         return this;
     },
@@ -247,10 +337,6 @@ var CardGameRouter = Backbone.Router.extend({
         var action = new models.ActionModel().set({"type":"playcardreq","card":img.src});
         websocket.send(JSON.stringify(action));
         $(img).hide();
-        return this;
-    },
-    status: function() {
-        new models.GameStatusModel().getStatus();
         return this;
     },
     handleServerResponse: function(evt) {
