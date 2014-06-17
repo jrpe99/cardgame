@@ -5,6 +5,7 @@ import dk.game.card.message.GameMessage;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.websocket.EncodeException;
 import javax.websocket.Session;
 
 /**
@@ -14,12 +15,12 @@ import javax.websocket.Session;
 public class WebSocketHelper {
     public static void send(Session session, GameMessage msg) {
         try {
-            String json = msg.toJson();
             System.out.println("Send to session : " + session.getId());
-            System.out.println("Message : \n" + json);
-            session.getBasicRemote().sendText(json);
+            session.getBasicRemote().sendObject(msg);
         } catch (IOException ex) {
             Logger.getLogger(CardGame.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (EncodeException ex) {
+            Logger.getLogger(WebSocketHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
