@@ -9,7 +9,7 @@ public class ScoreCalculator {
 
     public static Hand theWinnerIs(List<Hand> hands) {
         hands.stream().forEach(h -> ScoreCalculator.score(h));
-        return hands.stream().max(new Hand()).get();
+        return hands.stream().max(new HandComparator()).get();
     }
 
     public static void score(Hand hand) {

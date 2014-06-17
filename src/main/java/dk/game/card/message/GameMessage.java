@@ -41,9 +41,4 @@ public class GameMessage {
     public void setCommunicationId(String communicationId) {
         this.communicationId = communicationId;
     }
-
-    public String toJson() throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(this);
-    }
 }
