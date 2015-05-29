@@ -1,11 +1,9 @@
 package dk.game.card.message;
 
-import java.io.IOException;
-import org.codehaus.jackson.map.ObjectMapper;
 
 /**
  *
- * @author jorperss
+ * @author Jörgen Persson
  */
 public class GameMessage {
     public static final String LOGIN_REQUEST = "loginreq";
